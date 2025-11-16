@@ -1,4 +1,4 @@
-import { getAluguelService,createAluguelService,getAluguelByIdService } from "../services/aluguel.services.js"
+import { getAluguelService,createAluguelService,getAluguelByIdService,deleteAluguelService } from "../services/aluguel.services.js"
 
 
 export async function createAluguelController(req, res) {
@@ -101,4 +101,23 @@ export async function getAluguelByIdController(req, res) {
  const resultadoFormatado = AluguelFormatado(result.data);
  
  return res.status(200).send(resultadoFormatado);
+}
+
+export async function deleteAluguelController(req, res) {
+  const { id } = req.params;
+  
+  const aluguelId = parseInt(id);
+  if (isNaN(aluguelId) || aluguelId <= 0) {
+    return res.status(400).send({ message: "ID de aluguel inválido." });
+  }
+
+  const result = await deleteAluguelService(aluguelId);
+
+  // Trata os erros retornados (404, 400)
+  if (result.type !== 204) {
+    return res.status(result.type).send({ message: result.message || "Erro desconhecido ao excluir." });
+  }
+
+  // Retorna 204 No Content para exclusão bem sucedida
+  return res.sendStatus(204);
 }

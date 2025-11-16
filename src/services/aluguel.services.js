@@ -111,3 +111,23 @@ export async function returnAluguelService(aluguelId) {
 
  return { type: 200 };
 }
+
+export async function deleteAluguelService(aluguelId) {
+  // 1. Verificar se o aluguel existe e o status de devolução
+  const aluguel = await aluguelRepository.getAluguelById(aluguelId); 
+
+  if (!aluguel) {
+    return { type: 404, message: "Aluguel não encontrado para exclusão." };
+  }
+
+  // Regra de Negócio: Só é possível excluir se já foi devolvido
+  if (!aluguel.returnDate) {
+    return { type: 400, message: "Aluguel deve ser devolvido antes de ser excluído." };
+  }
+
+  // 2. Excluir no banco
+  await aluguelRepository.deleteAluguel(aluguelId);
+
+  // 204 No Content é o padrão para DELETE bem sucedido
+  return { type: 204 }; 
+}
