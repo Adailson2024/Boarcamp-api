@@ -6,11 +6,12 @@ export async function createAluguelController(req, res) {
 
   const result = await createAluguelService({ customerId, gameId, daysRented });
 
-  if (result.type === 400) return res.sendStatus(400);
-  if (result.type === 404) return res.sendStatus(404);
-  if (result.type === 422) return res.sendStatus(422);
+    if (result.type !== 201) {
+        // Retorna o status code e a mensagem de erro detalhada
+        return res.status(result.type).send({ message: result.message || "Erro desconhecido." });
+    }
 
-  return res.sendStatus(201);
+    return res.sendStatus(201)
 }
 
 

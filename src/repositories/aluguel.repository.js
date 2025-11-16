@@ -31,7 +31,7 @@ async function getAluguel() {
 async function createAluguel({customerId, gameId, rentDate, daysRented,returnDate, originalPrice,delayFree}) {
     const resultado= await db.query(
         `
-      INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "originalPrice", "returnDate", "delayFee")
+      INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
       VALUES ($1, $2, $3, $4, $5, $6, $7)`, [customerId, gameId, rentDate, daysRented,returnDate, originalPrice,delayFree]);
     
     

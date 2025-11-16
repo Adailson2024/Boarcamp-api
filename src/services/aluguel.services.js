@@ -23,7 +23,7 @@ export async function createAluguelService({ customerId, gameId, daysRented }) {
   // --- VALIDAÇÃO: ESTOQUE / DISPONIBILIDADE ---
   const rentalsOpen = await aluguelRepository.contadorDeAlugueisByGame(gameId);
   if (rentalsOpen >= game.stockTotal) {
-    return { type: 422 };
+    return { type: 422, message: "Este jogo não tem mais estoque disponível para aluguel." };
   }
 
   // --- REGRAS DE NEGÓCIO ---
