@@ -5,6 +5,19 @@ async function getJogoTitulo(name) {
     return resultado
 }
 
+async function getJogoById(gameId) {
+    const resultado = await db.query(`
+        SELECT 
+            *
+        FROM 
+            games
+        WHERE 
+            id = $1;
+    `, [gameId]);
+
+    return resultado.rows[0] || null;
+}
+
 async function getJogos() {
     const jogos= await db.query(`SELECT * FROM games;`);
     return jogos.rows
@@ -22,6 +35,7 @@ async function createJogos(name,image,stockTotal,pricePerDay) {
 const jogosRepository={
     getJogos,
     createJogos,
-    getJogoTitulo
+    getJogoTitulo,
+    getJogoById
 }
 export default jogosRepository

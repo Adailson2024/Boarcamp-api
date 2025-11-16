@@ -10,7 +10,7 @@ async function getClientes() {
     return jogos.rows
 }
 
-async function getClientesById(id) {
+async function getClientesById(custumerId) {
     const resultado = await db.query(`
         SELECT 
             *
@@ -18,7 +18,7 @@ async function getClientesById(id) {
             customers
         WHERE 
             id = $1;
-    `, [id]);
+    `, [custumerId]);
 
     return resultado.rows[0] || null;
 }

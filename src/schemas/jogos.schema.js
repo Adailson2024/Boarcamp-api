@@ -14,7 +14,7 @@ export const clienteSchema = Joi.object({
 });
 
 export const aluguelSchema=Joi.object({
-  customerId: 1,
-  gameId: 1,
-  daysRented: 3
+  customerId: Joi.string().required(),
+  gameId: Joi.string().required(),
+  daysRented: Joi.string().required()
 })

@@ -1,5 +1,17 @@
-import { getAluguelService } from "../services/aluguel.services.js"
+import { getAluguelService,createAluguelService } from "../services/aluguel.services.js"
 
+
+export async function createAluguelController(req, res) {
+  const { customerId, gameId, daysRented } = req.body;
+
+  const result = await createAluguelService({ customerId, gameId, daysRented });
+
+  if (result.type === 400) return res.sendStatus(400);
+  if (result.type === 404) return res.sendStatus(404);
+  if (result.type === 422) return res.sendStatus(422);
+
+  return res.sendStatus(201);
+}
 
 
 function AluguelFormatado(resultado) {
