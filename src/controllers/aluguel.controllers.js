@@ -1,4 +1,4 @@
-import { getAluguelService,createAluguelService,getAluguelByIdService,deleteAluguelService } from "../services/aluguel.services.js"
+import { getAluguelService,createAluguelService,getAluguelByIdService,deleteAluguelService, returnAluguelService } from "../services/aluguel.services.js"
 
 
 export async function createAluguelController(req, res) {

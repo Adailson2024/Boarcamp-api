@@ -58,11 +58,11 @@ async function getAluguelByIdDetailed(id) {
   return aluguel.rows[0];
 }
 
-async function createAluguel({customerId, gameId, rentDate, daysRented,returnDate, originalPrice,delayFree}) {
+async function createAluguel({customerId, gameId, rentDate, daysRented,returnDate, originalPrice,delayFee}) {
     const resultado= await db.query(
         `
       INSERT INTO rentals ("customerId", "gameId", "rentDate", "daysRented", "returnDate", "originalPrice", "delayFee")
-      VALUES ($1, $2, $3, $4, $5, $6, $7)`, [customerId, gameId, rentDate, daysRented,returnDate, originalPrice,delayFree]);
+      VALUES ($1, $2, $3, $4, $5, $6, $7)`, [customerId, gameId, rentDate, daysRented,returnDate, originalPrice,delayFee]);
     
     
 
@@ -77,7 +77,7 @@ async function updateAluguel({ id, returnDate, delayFee }) {
  `, [returnDate, delayFee, id]);
 }
 
-export async function deleteAluguel(id) {
+async function deleteAluguel(id) {
   await db.query(`DELETE FROM rentals WHERE id=$1;`,[id])
 }
 

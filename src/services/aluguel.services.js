@@ -74,12 +74,12 @@ export async function returnAluguelService(aluguelId) {
  const returnDate = new Date(); 
 
  
- const rentDate = new Date(aluguel.rentDate);
+ const rentDate = new Date(`${aluguel.rentDate}T00:00:00`);
  const daysRented = aluguel.daysRented;
  
  
  const pricePerDay = aluguel.pricePerDay;
-
+ const DAY_IN_MS = 24 * 60 * 60 * 1000;
  
  const expectedReturnDate = new Date(rentDate.getTime() + daysRented * DAY_IN_MS);
  
