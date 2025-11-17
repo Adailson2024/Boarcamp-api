@@ -106,11 +106,13 @@ export async function returnAluguelService(aluguelId) {
  });
 
  return { type: 200 };
+
+ 
 }
 
 export async function deleteAluguelService(aluguelId) {
 
- const aluguel = await aluguelRepository.getAluguelById(aluguelId); 
+ const aluguel = await aluguelRepository.getAluguelByIdDetailed(aluguelId); 
 
  if (!aluguel) {
   return { type: 404, message: "Aluguel não encontrado para exclusão." };
