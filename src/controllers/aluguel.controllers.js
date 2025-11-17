@@ -66,7 +66,7 @@ export async function getAlugueis(req, res) {
 export async function returnAluguelController(req, res) {
   const { id } = req.params;
 
- // O id deve ser um número inteiro positivo
+ 
  const aluguelId = parseInt(id);
  if (isNaN(aluguelId) || aluguelId <= 0) {
   return res.status(400).send({ message: "ID de aluguel inválido." });
@@ -74,12 +74,12 @@ export async function returnAluguelController(req, res) {
 
  const result = await returnAluguelService(aluguelId);
 
- // Trata os erros retornados pelo Service
+ 
  if (result.type !== 200) {
   return res.status(result.type).send({ message: result.message || "Erro desconhecido ao devolver." });
  }
 
-// Resposta de sucesso conforme a regra de negócio
+
  return res.sendStatus(200);
 }
 
@@ -97,27 +97,26 @@ export async function getAluguelByIdController(req, res) {
   return res.status(404).send({ message: result.message });
  }
 
- // Formata o resultado único
- const resultadoFormatado = AluguelFormatado(result.data);
+ const resultadoFormatado = AluguelFormatado([result.data]);
  
- return res.status(200).send(resultadoFormatado);
+ return res.status(200).send(resultadoFormatado[0]);
 }
 
 export async function deleteAluguelController(req, res) {
-  const { id } = req.params;
-  
-  const aluguelId = parseInt(id);
-  if (isNaN(aluguelId) || aluguelId <= 0) {
-    return res.status(400).send({ message: "ID de aluguel inválido." });
-  }
+ const { id } = req.params;
+ 
+ const aluguelId = parseInt(id);
+ if (isNaN(aluguelId) || aluguelId <= 0) {
+  return res.status(400).send({ message: "ID de aluguel inválido." });
+ }
 
-  const result = await deleteAluguelService(aluguelId);
+ const result = await deleteAluguelService(aluguelId);
 
-  // Trata os erros retornados (404, 400)
-  if (result.type !== 204) {
-    return res.status(result.type).send({ message: result.message || "Erro desconhecido ao excluir." });
-  }
 
-  // Retorna 204 No Content para exclusão bem sucedida
-  return res.sendStatus(204);
+ if (result.type !== 204) {
+  return res.status(result.type).send({ message: result.message || "Erro desconhecido ao excluir." });
+ }
+
+ 
+ return res.sendStatus(204);
 }
